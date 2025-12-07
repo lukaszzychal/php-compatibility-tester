@@ -32,6 +32,12 @@ jobs:
           - framework: slim
             version: '4.*'
             install_command: 'slim/slim-skeleton'
+          - framework: codeigniter
+            version: '5.*'
+            install_command: 'codeigniter4/appstarter'
+          - framework: cakephp
+            version: '5.*'
+            install_command: 'cakephp/app'
     
     steps:
       - name: Checkout code
