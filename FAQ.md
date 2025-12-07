@@ -1,103 +1,103 @@
-# FAQ - Często Zadawane Pytania
+# FAQ - Frequently Asked Questions
 
-## 1. Gdzie jest plik `.compatibility.yml`?
+## 1. Where is the `.compatibility.yml` file?
 
-**Odpowiedź**: Plik `.compatibility.yml` **nie istnieje** w głównym projekcie - to jest plik konfiguracyjny który **użytkownik tworzy** w swoim projekcie.
+**Answer**: The `.compatibility.yml` file **does not exist** in the main project - it is a configuration file that **users create** in their project.
 
-**Szablony i przykłady:**
-- `templates/config/.compatibility.yml.example` - przykład konfiguracji
-- `tests/fixtures/test-package/.compatibility.yml` - przykład dla testów
+**Templates and examples:**
+- `templates/config/.compatibility.yml.example` - configuration example
+- `tests/fixtures/test-package/.compatibility.yml` - example for tests
 
-**Jak utworzyć:**
+**How to create:**
 ```bash
 vendor/bin/compatibility-tester init
 ```
 
-To polecenie skopiuje `.compatibility.yml.example` do `.compatibility.yml` w Twoim projekcie.
+This command will copy `.compatibility.yml.example` to `.compatibility.yml` in your project.
 
-## 2. Który model AI ma najnowsze informacje?
+## 2. Which AI model has the latest information?
 
-**Modele z aktualizacjami (2024/2025):**
+**Models with updates (2024/2025):**
 
-| Model | Aktualizacje do | Web Search | Rekomendacja |
-|-------|----------------|-----------|--------------|
-| GPT-4o | Październik 2024 | ✅ | Najnowszy OpenAI |
-| Claude 3.5 Sonnet | 2024 | ✅ | Dobry balans |
-| GPT-4 Turbo | Kwiecień 2024 | ✅ | Stabilny |
-| Claude 3 Opus | 2024 | ✅ | Zaawansowany |
+| Model | Updates to | Web Search | Recommendation |
+|-------|------------|-----------|----------------|
+| GPT-4o | October 2024 | ✅ | Latest OpenAI |
+| Claude 3.5 Sonnet | 2024 | ✅ | Good balance |
+| GPT-4 Turbo | April 2024 | ✅ | Stable |
+| Claude 3 Opus | 2024 | ✅ | Advanced |
 
-**Dla najnowszych informacji (2025+):**
-- Użyj modeli z **web search** (np. modele z dostępem do internetu)
-- Sprawdź oficjalne źródła:
+**For latest information (2025+):**
+- Use models with **web search** (e.g., models with internet access)
+- Check official sources:
   - PHP: https://www.php.net/
   - Laravel: https://laravel.com/docs
   - Symfony: https://symfony.com/doc/current/index.html
-- Użyj narzędzi do wyszukiwania w czasie rzeczywistym
+- Use real-time search tools
 
-**W Cursor:**
-- Modele z web search mają dostęp do aktualnych informacji
-- Możesz użyć `web_search` tool do sprawdzenia najnowszych wersji
+**In Cursor:**
+- Models with web search have access to current information
+- You can use `web_search` tool to check latest versions
 
-## 3. Skąd wiem że frameworki są "obsługiwane" jeśli nie zostały przetestowane?
+## 3. How do I know frameworks are "supported" if they haven't been tested?
 
-**WAŻNE**: Poprawiam terminologię - frameworki nie są "obsługiwane", tylko **"konfigurowalne"**.
+**IMPORTANT**: I'm correcting the terminology - frameworks are not "supported", they are **"configurable"**.
 
-### Dlaczego wszystkie frameworki są "konfigurowalne"?
+### Why are all frameworks "configurable"?
 
-Kod źródłowy jest **całkowicie generyczny** - nie ma żadnych hardcoded nazw frameworków!
+The source code is **completely generic** - there are no hardcoded framework names!
 
-**Sprawdź kod w `src/FrameworkTester.php`:**
+**Check the code in `src/FrameworkTester.php`:**
 
 ```php
-// Linia 132: Używa install_command z konfiguracji
+// Line 132: Uses install_command from configuration
 $installCommand = $frameworkConfig['install_command'];
 
-// Linia 138-140: Parsuje i uruchamia dowolne polecenie
+// Line 138-140: Parses and runs any command
 $commandParts = explode(' ', $installCommand);
 $command = array_shift($commandParts);
 $process = new Process(array_merge([$command], $commandParts));
 ```
 
-**Co to oznacza?**
-- Kod nie sprawdza nazwy frameworka
-- Używa tylko `install_command` z konfiguracji YAML
-- Każdy framework z `composer create-project` może być użyty
-- **Nie ma ograniczeń w kodzie!**
+**What does this mean?**
+- Code doesn't check framework name
+- Uses only `install_command` from YAML configuration
+- Any framework with `composer create-project` can be used
+- **There are no code limitations!**
 
-### Różnica: Konfigurowalny vs. Przetestowany
+### Difference: Configurable vs. Tested
 
-| Status | Znaczenie | Przykład |
-|--------|-----------|----------|
-| **Konfigurowalny** | Można dodać do `.compatibility.yml` i powinno działać | Wszystkie 9 frameworków |
-| **Przetestowany** | Zweryfikowany działaniem w CI/CD | Laravel, Symfony, Slim |
-| **Obsługiwany** | ❌ Niepoprawna terminologia - nie używamy tego |
+| Status | Meaning | Example |
+|--------|---------|---------|
+| **Configurable** | Can be added to `.compatibility.yml` and should work | All 9 frameworks |
+| **Tested** | Verified by operation in CI/CD | Laravel, Symfony, Slim, CodeIgniter, CakePHP |
+| **Supported** | ❌ Incorrect terminology - we don't use this |
 
-### Dlaczego tylko 3 są przetestowane?
+### Why are only some tested?
 
-1. **Czas CI/CD**: Testowanie wszystkich 9 frameworków zajęłoby ~2-3 godziny
-2. **Zasoby**: Wymaga dużo pamięci i czasu
-3. **Priorytet**: Laravel, Symfony, Slim to najpopularniejsze
-4. **Weryfikacja**: Jeśli te 3 działają, kod generyczny powinien działać dla wszystkich
+1. **CI/CD Time**: Testing all 9 frameworks would take ~2-3 hours
+2. **Resources**: Requires a lot of memory and time
+3. **Priority**: Laravel, Symfony, Slim are the most popular
+4. **Verification**: If these work, generic code should work for all
 
-### Jak przetestować pozostałe frameworki?
+### How to test remaining frameworks?
 
-**Opcja 1: Lokalnie**
+**Option 1: Locally**
 ```bash
 vendor/bin/compatibility-tester test --framework=codeigniter
 ```
 
-**Opcja 2: Dodać do CI/CD**
-Edytuj `.github/workflows/self-test.yml` i dodaj do matrix:
+**Option 2: Add to CI/CD**
+Edit `.github/workflows/self-test.yml` and add to matrix:
 ```yaml
 framework: [laravel, symfony, slim, codeigniter, cakephp]
 ```
 
-**Opcja 3: Użyć w swoim projekcie**
-Po prostu dodaj framework do `.compatibility.yml` - kod jest generyczny, powinno działać!
+**Option 3: Use in your project**
+Just add framework to `.compatibility.yml` - code is generic, it should work!
 
-## Podsumowanie
+## Summary
 
-1. **`.compatibility.yml`** - tworzy użytkownik przez `compatibility-tester init`
-2. **Modele AI** - GPT-4o lub Claude 3.5 Sonnet z web search dla najnowszych informacji
-3. **Frameworki** - wszystkie są **konfigurowalne** (kod generyczny), tylko 3 są **przetestowane** w CI/CD
+1. **`.compatibility.yml`** - created by user via `compatibility-tester init`
+2. **AI Models** - GPT-4o or Claude 3.5 Sonnet with web search for latest information
+3. **Frameworks** - all are **configurable** (generic code), only some are **tested** in CI/CD
 

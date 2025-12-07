@@ -6,38 +6,54 @@ on:
   pull_request:
     branches: [ main, develop ]
   schedule:
-    - cron: '0 2 * * 0'  # Weekly on Sunday
+    - cron: '0 2 1 * *'  # Monthly on the 1st day of the month
 
 jobs:
   self-test:
-    name: Test ${{ matrix.framework-config.framework }} ${{ matrix.framework-config.version }} (PHP ${{ matrix.php-version }})
+    name: Test ${{ matrix.framework-config.framework }} ${{ matrix.framework-config.version }} (${{ matrix.framework-config.label }}) - PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         php-version: ['8.1', '8.2', '8.3', '8.4']
         framework-config:
+          # Laravel: 11.* (Latest LTS), 12.* (Latest stable)
           - framework: laravel
             version: '11.*'
             install_command: 'laravel/laravel'
+            label: 'LTS'
           - framework: laravel
             version: '12.*'
             install_command: 'laravel/laravel'
+            label: 'Latest stable'
+          # Symfony: 7.4.* (Latest LTS), 8.0.* (Latest stable)
           - framework: symfony
             version: '7.4.*'
             install_command: 'symfony/symfony'
+            label: 'LTS'
           - framework: symfony
             version: '8.0.*'
             install_command: 'symfony/symfony'
+            label: 'Latest stable'
+          # Slim: 4.* (Latest LTS), 5.* (Latest stable/new)
           - framework: slim
             version: '4.*'
             install_command: 'slim/slim-skeleton'
+            label: 'LTS'
+          - framework: slim
+            version: '5.*'
+            install_command: 'slim/slim-skeleton'
+            label: 'Latest stable'
+          # CodeIgniter: 5.* (Latest stable)
           - framework: codeigniter
             version: '5.*'
             install_command: 'codeigniter4/appstarter'
+            label: 'Latest stable'
+          # CakePHP: 5.* (Latest stable)
           - framework: cakephp
             version: '5.*'
             install_command: 'cakephp/app'
+            label: 'Latest stable'
     
     steps:
       - name: Checkout code
