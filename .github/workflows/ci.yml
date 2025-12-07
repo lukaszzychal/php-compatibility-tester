@@ -110,6 +110,6 @@ jobs:
         if: github.event_name == 'pull_request' || (github.event.before != '0000000000000000000000000000000000000000' && github.event.after != github.event.before)
         with:
           path: ./
-          base: ${{ github.event_name == 'pull_request' && github.base_ref || github.event.before }}
-          head: ${{ github.event_name == 'pull_request' && github.head_ref || github.event.after }}
+          base: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          head: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}
 
