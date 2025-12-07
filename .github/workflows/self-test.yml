@@ -10,7 +10,7 @@ on:
 
 jobs:
   self-test:
-    name: Test Compatibility Tester with Real Frameworks
+    name: Test ${{ matrix.framework }} ${{ matrix.version }} (PHP ${{ matrix.php-version }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -44,11 +44,8 @@ jobs:
           extensions: mbstring, xml, curl, json, yaml, zip
           coverage: none
       
-      - name: Install Composer
-        uses: php-actions/composer@v1
-        with:
-          command: install
-          args: --no-interaction --prefer-dist
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-dev --ignore-platform-reqs
       
       - name: Copy test package
         run: |
