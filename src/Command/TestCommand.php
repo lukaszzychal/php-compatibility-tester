@@ -28,7 +28,8 @@ class TestCommand extends Command
             ->addOption('framework', 'f', InputOption::VALUE_REQUIRED, 'Filter by framework name')
             ->addOption('version', null, InputOption::VALUE_REQUIRED, 'Filter by framework version')
             ->addOption('php', 'p', InputOption::VALUE_REQUIRED, 'Filter by PHP version')
-            ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to configuration file', '.compatibility.yml');
+            ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to configuration file', '.compatibility.yml')
+            ->addOption('package-path', null, InputOption::VALUE_REQUIRED, 'Path to the package being tested');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -37,7 +38,7 @@ class TestCommand extends Command
         $io->title('PHP Compatibility Tester - Running Tests');
 
         $configPath = $input->getOption('config');
-        $packagePath = getcwd();
+        $packagePath = $input->getOption('package-path') ?? getcwd();
 
         if (!file_exists($configPath)) {
             $io->error("Configuration file not found: {$configPath}");

@@ -46,7 +46,8 @@ jobs:
         run: |
           cp -r tests/fixtures/test-package /tmp/test-package
           cd /tmp/test-package
-          composer install --no-interaction --prefer-dist
+          composer install --no-interaction --prefer-dist --no-scripts
+          composer dump-autoload
       
       - name: Create test configuration
         run: |
@@ -70,14 +71,16 @@ jobs:
             --config=/tmp/test-config.yml \
             --framework=${{ matrix.framework }} \
             --php=${{ matrix.php-version }} \
-            --package-path=/tmp/test-package || true
+            --package-path=/tmp/test-package
         continue-on-error: true
+        timeout-minutes: 30
       
       - name: Generate report
         if: always()
         run: |
           vendor/bin/compatibility-tester report \
             --config=/tmp/test-config.yml \
+            --package-path=/tmp/test-package \
             --format=json \
             --output=/tmp/report.json || true
       

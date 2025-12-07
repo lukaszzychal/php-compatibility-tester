@@ -26,7 +26,8 @@ class ReportCommand extends Command
             ->setDescription('Generate compatibility test report')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'Report format (markdown, json, html)', 'markdown')
             ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Output file path')
-            ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to configuration file', '.compatibility.yml');
+            ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to configuration file', '.compatibility.yml')
+            ->addOption('package-path', null, InputOption::VALUE_REQUIRED, 'Path to the package being tested');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -37,6 +38,7 @@ class ReportCommand extends Command
         $configPath = $input->getOption('config');
         $format = $input->getOption('format');
         $outputPath = $input->getOption('output');
+        $packagePath = $input->getOption('package-path') ?? getcwd();
 
         if (!in_array($format, ['markdown', 'json', 'html'])) {
             $io->error("Invalid format: {$format}. Supported formats: markdown, json, html");
@@ -50,7 +52,7 @@ class ReportCommand extends Command
         }
 
         try {
-            $tester = new CompatibilityTester($configPath, getcwd());
+            $tester = new CompatibilityTester($configPath, $packagePath);
         } catch (ConfigurationException $e) {
             $io->error('Configuration error: ' . $e->getMessage());
             return Command::FAILURE;
