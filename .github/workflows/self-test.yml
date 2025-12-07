@@ -20,10 +20,13 @@ jobs:
         include:
           - framework: laravel
             version: '11.*'
+            install_command: 'laravel/laravel'
           - framework: symfony
             version: '7.4.*'
+            install_command: 'symfony/symfony'
           - framework: slim
             version: '4.*'
+            install_command: 'slim/slim-skeleton'
     
     steps:
       - name: Checkout code
@@ -57,7 +60,7 @@ jobs:
           frameworks:
             ${{ matrix.framework }}:
               versions: ['${{ matrix.version }}']
-              install_command: 'composer create-project ${{ matrix.framework == "laravel" && "laravel/laravel" || matrix.framework == "symfony" && "symfony/symfony" || "slim/slim-skeleton" }}'
+              install_command: 'composer create-project ${{ matrix.install_command }}'
               php_min_version: '8.1'
           test_scripts:
             - name: autoloading
