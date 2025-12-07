@@ -186,9 +186,20 @@ See [Configuration Documentation](docs/configuration.md) for detailed informatio
 - [Usage Guide](docs/usage.md)
 - [Examples](docs/examples/)
 
+## Links
+
+- **Packagist**: [lukaszzychal/php-compatibility-tester](https://packagist.org/packages/lukaszzychal/php-compatibility-tester)
+- **GitHub**: [lukaszzychal/php-compatibility-tester](https://github.com/lukaszzychal/php-compatibility-tester)
+- **Issues**: [Report a bug or request a feature](https://github.com/lukaszzychal/php-compatibility-tester/issues)
+- **Discussions**: [Ask questions and share ideas](https://github.com/lukaszzychal/php-compatibility-tester/discussions)
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+- [Open an Issue](https://github.com/lukaszzychal/php-compatibility-tester/issues) to report bugs or suggest features
+- [Start a Discussion](https://github.com/lukaszzychal/php-compatibility-tester/discussions) to ask questions or share ideas
+- Submit a Pull Request to contribute code
 
 ## License
 
