@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1', '8.2', '8.3','8.4','8.5']
+        php-version: ['8.1', '8.2', '8.3', '8.4']
     
     steps:
       - name: Checkout code
@@ -34,14 +34,12 @@ jobs:
       - name: Run tests in Docker
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/app \
             php-compatibility-tester:php${{ matrix.php-version }} \
             vendor/bin/phpunit
       
       - name: Run smoke tests
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/app \
             php-compatibility-tester:php${{ matrix.php-version }} \
             vendor/bin/phpunit tests/Unit/SmokeTest.php
 

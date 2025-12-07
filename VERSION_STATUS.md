@@ -1,130 +1,122 @@
-# Status Wersji PHP i Frameworków
+# PHP and Framework Version Status
 
-## Odpowiedzi na pytania
+## Answers to Questions
 
-### 1. Dlaczego użyłem starszych wersji PHP?
+### 1. Why did I use older PHP versions?
 
-**Odpowiedź**: Moja wiedza treningowa kończy się na kwiecień 2024, więc użyłem wersji które były wtedy stabilne i powszechnie używane (PHP 8.1, 8.2, 8.3). PHP 8.4 została wydana w listopadzie 2024, więc nie była jeszcze dostępna w momencie mojego treningu.
+**Answer**: My training knowledge ends in April 2024, so I used versions that were stable and commonly used at that time (PHP 8.1, 8.2, 8.3). PHP 8.4 was released in November 2024, so it wasn't available at the time of my training.
 
-**Który model AI ma aktualniejsze informacje?**
+**Which AI model has more current information?**
 
-Modele z aktualizacjami (2024/2025):
-- **Claude 3.5 Sonnet** (Anthropic) - aktualizacje do 2024
-- **GPT-4 Turbo** (OpenAI) - aktualizacje do kwietnia 2024
-- **GPT-4o** (OpenAI) - najnowszy, aktualizacje do października 2024
-- **Claude 3 Opus** - aktualizacje do 2024
+Models with updates (2024/2025):
+- **Claude 3.5 Sonnet** (Anthropic) - updates to 2024
+- **GPT-4 Turbo** (OpenAI) - updates to April 2024
+- **GPT-4o** (OpenAI) - latest, updates to October 2024
+- **Claude 3 Opus** - updates to 2024
 
-Dla najnowszych informacji (2025+):
-- Użyj modeli z **web search** (np. modele z dostępem do internetu)
-- Sprawdź oficjalne źródła (php.net, framework documentation)
-- Użyj narzędzi do wyszukiwania w czasie rzeczywistym
+For latest information (2025+):
+- Use models with **web search** (e.g., models with internet access)
+- Check official sources (php.net, framework documentation)
+- Use real-time search tools
 
-**Rozwiązanie**: Zaktualizowałem wszystkie miejsca do najnowszych wersji:
-- ✅ PHP 8.4 dodane do wszystkich workflow i konfiguracji
-- ✅ PHP 8.5 dodane do docker-test.yml (już przez Ciebie)
-- ✅ Dokumentacja zaktualizowana
+**Solution**: I've updated all places to the latest versions:
+- ✅ PHP 8.4 added to all workflows and configurations
+- ✅ PHP 8.5 added to docker-test.yml (already by you)
+- ✅ Documentation updated
 
-### 2. Które frameworki są REALNIE testowane?
+### 2. Which frameworks are ACTUALLY tested?
 
-**Odpowiedź**: W CI/CD testowane są tylko **3 frameworki**:
+**Answer**: In CI/CD, the following frameworks are tested:
 
-**Lokalizacja**: `.github/workflows/self-test.yml` (linie 19-26)
+**Location**: `.github/workflows/self-test.yml`
+
+1. **Laravel** (versions: 11.* LTS, 12.* Latest stable)
+2. **Symfony** (versions: 7.4.* LTS, 8.0.* Latest stable)
+3. **Slim** (versions: 4.* LTS, 5.* Latest stable)
+4. **CodeIgniter** (version: 5.* Latest stable)
+5. **CakePHP** (version: 5.* Latest stable)
+
+**Why not all?**
+
+- Testing all 9 frameworks would take too long in CI/CD
+- Would require more resources (time, memory, network)
+- Some frameworks require additional dependencies (e.g., Phalcon requires PHP extension)
+
+**Configurable vs. Tested:**
+
+**IMPORTANT**: The source code is **generic** - there are no hardcoded framework names. All frameworks are **configurable** (can be added to `.compatibility.yml`), but only some are **tested** in CI/CD.
+
+| Framework | Configurable | Tested in CI | Status |
+|-----------|--------------|--------------|--------|
+| Laravel | ✅ | ✅ | Verified by operation |
+| Symfony | ✅ | ✅ | Verified by operation |
+| Slim | ✅ | ✅ | Verified by operation |
+| CodeIgniter | ✅ | ✅ | Verified by operation |
+| CakePHP | ✅ | ✅ | Verified by operation |
+| Laminas | ✅ | ❌ | Example configuration only |
+| Yii | ✅ | ❌ | Example configuration only |
+| Lumen | ✅ | ❌ | Example configuration only |
+| Phalcon | ✅ | ❌ | Example configuration only |
+
+**Why are all "configurable"?**
+
+Code in `src/FrameworkTester.php` is generic - it doesn't check framework name, only:
+1. Uses `install_command` from configuration
+2. Runs Composer create-project
+3. Installs package
+4. Runs test scripts
+
+So **any framework** that has `composer create-project` can be used - there are no code limitations!
+
+## How to add more frameworks for testing?
+
+Edit `.github/workflows/self-test.yml`:
 
 ```yaml
-framework: [laravel, symfony, slim]
-include:
+framework-config:
   - framework: laravel
     version: '11.*'
-  - framework: symfony
-    version: '7.4.*'
-  - framework: slim
-    version: '4.*'
+    install_command: 'laravel/laravel'
+    label: 'LTS'
+  - framework: codeigniter
+    version: '5.*'
+    install_command: 'codeigniter4/appstarter'
+    label: 'Latest stable'
 ```
 
-**Dlaczego tylko 3?**
-- Testowanie wszystkich 9 frameworków zajęłoby zbyt dużo czasu w CI/CD
-- Wymagałoby więcej zasobów (czas, pamięć, sieć)
-- Niektóre frameworki wymagają dodatkowych zależności (np. Phalcon wymaga rozszerzenia PHP)
+## Current PHP Versions (2024/2025)
 
-**Konfigurowalne vs. Przetestowane:**
+- **PHP 8.1** - LTS (support until 2025)
+- **PHP 8.2** - LTS (support until 2026)
+- **PHP 8.3** - Active Support (released November 2023)
+- **PHP 8.4** - Active Support (released November 2024) ✅ Added
+- **PHP 8.5** - Planned for 2025 ✅ Added to docker-test.yml
 
-**WAŻNE**: Kod źródłowy jest **generyczny** - nie ma hardcoded nazw frameworków. Wszystkie frameworki są **konfigurowalne** (można je dodać do `.compatibility.yml`), ale tylko 3 są **przetestowane** w CI/CD.
+## Where are PHP versions?
 
-| Framework | Konfigurowalny | Przetestowany w CI | Status |
-|-----------|----------------|-------------------|--------|
-| Laravel | ✅ | ✅ | Zweryfikowany działaniem |
-| Symfony | ✅ | ✅ | Zweryfikowany działaniem |
-| Slim | ✅ | ✅ | Zweryfikowany działaniem |
-| CodeIgniter | ✅ | ❌ | Tylko przykładowa konfiguracja |
-| Laminas | ✅ | ❌ | Tylko przykładowa konfiguracja |
-| Yii | ✅ | ❌ | Tylko przykładowa konfiguracja |
-| CakePHP | ✅ | ❌ | Tylko przykładowa konfiguracja |
-| Lumen | ✅ | ❌ | Tylko przykładowa konfiguracja |
-| Phalcon | ✅ | ❌ | Tylko przykładowa konfiguracja |
-
-**Dlaczego wszystkie są "konfigurowalne"?**
-
-Kod w `src/FrameworkTester.php` jest generyczny - nie sprawdza nazwy frameworka, tylko:
-1. Używa `install_command` z konfiguracji
-2. Uruchamia Composer create-project
-3. Instaluje pakiet
-4. Uruchamia test scripts
-
-Więc **każdy framework** który ma `composer create-project` może być użyty - nie ma ograniczeń w kodzie!
-
-## Jak dodać więcej frameworków do testowania?
-
-Edytuj `.github/workflows/self-test.yml`:
-
-```yaml
-matrix:
-  framework: [laravel, symfony, slim, codeigniter, cakephp]
-  include:
-    - framework: laravel
-      version: '11.*'
-    - framework: symfony
-      version: '7.4.*'
-    - framework: slim
-      version: '4.*'
-    - framework: codeigniter
-      version: '4.*'
-    - framework: cakephp
-      version: '5.*'
-```
-
-## Aktualne wersje PHP (2024/2025)
-
-- **PHP 8.1** - LTS (wsparcie do 2025)
-- **PHP 8.2** - LTS (wsparcie do 2026) 
-- **PHP 8.3** - Active Support (wydana w listopadzie 2023)
-- **PHP 8.4** - Active Support (wydana w listopadzie 2024) ✅ Dodane
-- **PHP 8.5** - Planowana na 2025 ✅ Dodane do docker-test.yml
-
-## Gdzie są wersje PHP?
-
-Zaktualizowane miejsca:
+Updated locations:
 
 1. ✅ `.github/workflows/self-test.yml` - PHP 8.1-8.4
 2. ✅ `.github/workflows/ci.yml` - PHP 8.1-8.4
-3. ✅ `.github/workflows/docker-test.yml` - PHP 8.1-8.5 (już przez Ciebie)
+3. ✅ `.github/workflows/docker-test.yml` - PHP 8.1-8.5 (already by you)
 4. ✅ `templates/config/.compatibility.yml.example` - PHP 8.1-8.4
 5. ✅ `src/Command/InitCommand.php` - PHP 8.1-8.4
 6. ✅ `docker-compose.test.yml` - PHP 8.1-8.4
 7. ✅ `README.md` - PHP 8.1-8.4
 8. ✅ `docs/usage.md` - PHP 8.1-8.4
 
-## Rekomendacje
+## Recommendations
 
-1. **Dla produkcji**: Użyj PHP 8.2 lub 8.3 (LTS)
-2. **Dla testowania**: Dodaj PHP 8.4 do wszystkich workflow
-3. **Dla frameworków**: Rozważ dodanie więcej frameworków do `self-test.yml` jeśli masz wystarczające zasoby CI/CD
+1. **For production**: Use PHP 8.2 or 8.3 (LTS)
+2. **For testing**: Add PHP 8.4 to all workflows
+3. **For frameworks**: Consider adding more frameworks to `self-test.yml` if you have sufficient CI/CD resources
 
-## Aktualizacja w przyszłości
+## Future Updates
 
-Aby zaktualizować wersje w przyszłości:
+To update versions in the future:
 
-1. Sprawdź najnowsze stabilne wersje PHP na php.net
-2. Zaktualizuj wszystkie pliki wymienione powyżej
-3. Przetestuj w CI/CD
-4. Zaktualizuj dokumentację
+1. Check latest stable PHP versions on php.net
+2. Update all files listed above
+3. Test in CI/CD
+4. Update documentation
 

@@ -27,6 +27,9 @@ class ConfigLoaderTest extends TestCase
         }
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ConfigLoader::load
+     */
     public function testLoadValidConfig(): void
     {
         $configPath = $this->tempDir . '/.compatibility.yml';
@@ -48,6 +51,9 @@ YAML;
         $this->assertEquals('test/package', $config['package_name']);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ConfigLoader::load
+     */
     public function testLoadMissingFile(): void
     {
         $this->expectException(ConfigurationException::class);
@@ -57,6 +63,9 @@ YAML;
         $loader->load('/nonexistent/file.yml');
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ConfigLoader::load
+     */
     public function testLoadInvalidConfig(): void
     {
         $configPath = $this->tempDir . '/.compatibility.yml';
@@ -68,6 +77,9 @@ YAML;
         $loader->load($configPath);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ConfigLoader::load
+     */
     public function testValidateMissingPackageName(): void
     {
         $configPath = $this->tempDir . '/.compatibility.yml';
