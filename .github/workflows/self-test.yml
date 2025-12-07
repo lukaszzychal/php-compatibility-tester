@@ -145,7 +145,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.framework-config.framework }}-${{ matrix.framework-config.version }}-php-${{ matrix.php-version }}
+          name: test-results-${{ matrix.framework-config.framework }}-${{ replace(matrix.framework-config.version, '*', 'x') }}-php-${{ matrix.php-version }}
           path: /tmp/reports/
           retention-days: 30
           if-no-files-found: warn
