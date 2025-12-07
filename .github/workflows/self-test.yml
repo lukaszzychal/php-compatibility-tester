@@ -3,8 +3,30 @@ name: Self-Test (Test the Tester)
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - 'src/**'
+      - 'bin/**'
+      - 'tests/**'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'phpunit.xml.dist'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/**'
+      - 'templates/**'
   pull_request:
     branches: [ main, develop ]
+    paths:
+      - 'src/**'
+      - 'bin/**'
+      - 'tests/**'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'phpunit.xml.dist'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/**'
+      - 'templates/**'
   schedule:
     - cron: '0 2 1 * *'  # Monthly on the 1st day of the month
 
