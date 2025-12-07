@@ -45,7 +45,7 @@ jobs:
           coverage: none
       
       - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist --no-dev --ignore-platform-reqs
+        run: composer install --no-interaction --prefer-dist --ignore-platform-reqs
       
       - name: Copy test package
         run: |
@@ -72,7 +72,7 @@ jobs:
       
       - name: Run compatibility test
         run: |
-          vendor/bin/compatibility-tester test \
+          php bin/compatibility-tester test \
             --config=/tmp/test-config.yml \
             --framework=${{ matrix.framework-config.framework }} \
             --php=${{ matrix.php-version }} \
@@ -83,7 +83,7 @@ jobs:
       - name: Generate report
         if: always()
         run: |
-          vendor/bin/compatibility-tester report \
+          php bin/compatibility-tester report \
             --config=/tmp/test-config.yml \
             --package-path=/tmp/test-package \
             --format=json \
