@@ -1,0 +1,91 @@
+name: Self-Test (Test the Tester)
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 2 * * 0'  # Weekly on Sunday
+
+jobs:
+  self-test:
+    name: Test Compatibility Tester with Real Frameworks
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3', '8.4']
+        framework: [laravel, symfony, slim]
+        include:
+          - framework: laravel
+            version: '11.*'
+          - framework: symfony
+            version: '7.4.*'
+          - framework: slim
+            version: '4.*'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, curl, json, yaml, zip
+          coverage: none
+      
+      - name: Install Composer
+        uses: php-actions/composer@v1
+        with:
+          command: install
+          args: --no-interaction --prefer-dist
+      
+      - name: Copy test package
+        run: |
+          cp -r tests/fixtures/test-package /tmp/test-package
+          cd /tmp/test-package
+          composer install --no-interaction --prefer-dist
+      
+      - name: Create test configuration
+        run: |
+          cat > /tmp/test-config.yml <<EOF
+          package_name: "test/compatibility-package"
+          php_versions: ['${{ matrix.php-version }}']
+          frameworks:
+            ${{ matrix.framework }}:
+              versions: ['${{ matrix.version }}']
+              install_command: 'composer create-project ${{ matrix.framework == "laravel" && "laravel/laravel" || matrix.framework == "symfony" && "symfony/symfony" || "slim/slim-skeleton" }}'
+              php_min_version: '8.1'
+          test_scripts:
+            - name: autoloading
+              script: 'tests/compatibility/check-autoload.php'
+              description: 'Test class autoloading'
+          EOF
+      
+      - name: Run compatibility test
+        run: |
+          vendor/bin/compatibility-tester test \
+            --config=/tmp/test-config.yml \
+            --framework=${{ matrix.framework }} \
+            --php=${{ matrix.php-version }} \
+            --package-path=/tmp/test-package || true
+        continue-on-error: true
+      
+      - name: Generate report
+        if: always()
+        run: |
+          vendor/bin/compatibility-tester report \
+            --config=/tmp/test-config.yml \
+            --format=json \
+            --output=/tmp/report.json || true
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.framework }}-php-${{ matrix.php-version }}
+          path: /tmp/report.json
+          if-no-files-found: ignore
+

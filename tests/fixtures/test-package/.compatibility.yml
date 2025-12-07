@@ -1,0 +1,20 @@
+package_name: "test/compatibility-package"
+php_versions: ['8.1', '8.2', '8.3']
+frameworks:
+  laravel:
+    versions: ['11.*']
+    install_command: 'composer create-project laravel/laravel'
+    php_min_version: '8.1'
+  symfony:
+    versions: ['7.4.*']
+    install_command: 'composer create-project symfony/symfony'
+    php_min_version: '8.1'
+  slim:
+    versions: ['4.*']
+    install_command: 'composer create-project slim/slim-skeleton'
+    php_min_version: '8.1'
+test_scripts:
+  - name: autoloading
+    script: 'tests/compatibility/check-autoload.php'
+    description: 'Test class autoloading'
+

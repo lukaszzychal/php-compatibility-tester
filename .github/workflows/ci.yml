@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3', '8.4']
+        os: [ubuntu-latest]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, curl, json, yaml
+          coverage: none
+      
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-php-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php-version }}-composer-
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+      
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit
+      
+      - name: Run PHPStan
+        continue-on-error: true
+        run: composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src --level=5 || true
+      
+      - name: Check code style
+        continue-on-error: true
+        run: |
+          composer require --dev friendsofphp/php-cs-fixer || true
+          vendor/bin/php-cs-fixer fix --dry-run --diff || true
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, curl, json, yaml
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+      
+      - name: Validate composer.json
+        run: composer validate --strict
+      
+      - name: Check syntax
+        run: find src bin -name "*.php" -exec php -l {} \;
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, curl, json, yaml
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+      
+      - name: Run Security Checker
+        uses: symfonycorp/security-checker-action@v4
+      
+      - name: Check for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+

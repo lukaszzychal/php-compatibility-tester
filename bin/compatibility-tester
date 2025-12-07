@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use LukaszZychal\PhpCompatibilityTester\Command\InitCommand;
+use LukaszZychal\PhpCompatibilityTester\Command\ReportCommand;
+use LukaszZychal\PhpCompatibilityTester\Command\TestCommand;
+use Symfony\Component\Console\Application;
+
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+} elseif (file_exists(__DIR__ . '/../../../autoload.php')) {
+    require_once __DIR__ . '/../../../autoload.php';
+} else {
+    fwrite(STDERR, "Error: Composer autoloader not found.\n");
+    exit(1);
+}
+
+$application = new Application('PHP Compatibility Tester', '1.0.0');
+$application->add(new InitCommand());
+$application->add(new TestCommand());
+$application->add(new ReportCommand());
+$application->run();
+

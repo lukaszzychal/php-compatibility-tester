@@ -1,0 +1,57 @@
+package_name: "vendor/package-name"
+php_versions: ['8.1', '8.2', '8.3', '8.4']
+# Note: PHP 8.5 is planned for 2025, add when available
+frameworks:
+  laravel:
+    versions: ['11.*', '12.*']
+    install_command: 'composer create-project laravel/laravel'
+    php_min_version: '8.1'
+    php_min_version_12: '8.2'
+  symfony:
+    versions: ['7.4.*', '8.0.*']
+    install_command: 'composer create-project symfony/symfony'
+    php_min_version: '8.1'
+    php_min_version_8: '8.2'
+  codeigniter:
+    versions: ['4.*', '5.*']
+    install_command: 'composer create-project codeigniter4/appstarter'
+    php_min_version: '8.1'
+  laminas:
+    versions: ['3.*']
+    install_command: 'composer create-project laminas/laminas-mvc-skeleton'
+    php_min_version: '8.1'
+  yii:
+    versions: ['2.0.*']
+    install_command: 'composer create-project yiisoft/yii2-app-basic'
+    php_min_version: '8.0'
+  cakephp:
+    versions: ['5.*']
+    install_command: 'composer create-project cakephp/app'
+    php_min_version: '8.2'
+  slim:
+    versions: ['4.*', '5.*']
+    install_command: 'composer create-project slim/slim-skeleton'
+    php_min_version: '8.1'
+  lumen:
+    versions: ['11.*']
+    install_command: 'composer create-project laravel/lumen'
+    php_min_version: '8.1'
+  phalcon:
+    versions: ['5.*']
+    install_command: 'composer create-project phalcon/mvc'
+    php_min_version: '8.1'
+    note: 'Requires Phalcon PHP extension'
+test_scripts:
+  - name: autoloading
+    script: 'tests/compatibility/check-autoload.php'
+    description: 'Test class autoloading'
+  - name: basic_functionality
+    script: 'tests/compatibility/check-basic.php'
+    description: 'Test basic library functionality'
+github_actions:
+  schedule: '0 2 * * 1'
+  on_push: true
+  paths:
+    - 'composer.json'
+    - 'composer.lock'
+

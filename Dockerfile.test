@@ -1,0 +1,39 @@
+ARG PHP_VERSION=8.1
+FROM php:${PHP_VERSION}-cli
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    curl \
+    libzip-dev \
+    libxml2-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install -j$(nproc) \
+    zip \
+    xml \
+    mbstring
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /app
+
+# Copy composer files
+COPY composer.json composer.lock* ./
+
+# Install dependencies
+RUN composer install --no-interaction --prefer-dist --no-scripts
+
+# Copy application files
+COPY . .
+
+# Run composer scripts
+RUN composer dump-autoload
+
+# Default command
+CMD ["php", "vendor/bin/phpunit"]
+

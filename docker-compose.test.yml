@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  php81:
+    image: php:8.1-cli
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: php -v
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+
+  php82:
+    image: php:8.2-cli
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: php -v
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+
+  php83:
+    image: php:8.3-cli
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: php -v
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+
+  php84:
+    image: php:8.4-cli
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: php -v
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+
+  test-php81:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: php-compatibility-tester:php81
+    environment:
+      - PHP_VERSION=8.1
+      - COMPOSER_ALLOW_SUPERUSER=1
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer
+    working_dir: /app
+
+  test-php82:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: php-compatibility-tester:php82
+    environment:
+      - PHP_VERSION=8.2
+      - COMPOSER_ALLOW_SUPERUSER=1
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer
+    working_dir: /app
+
+  test-php83:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: php-compatibility-tester:php83
+    environment:
+      - PHP_VERSION=8.3
+      - COMPOSER_ALLOW_SUPERUSER=1
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer
+    working_dir: /app
+
+  test-php84:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: php-compatibility-tester:php84
+    environment:
+      - PHP_VERSION=8.4
+      - COMPOSER_ALLOW_SUPERUSER=1
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer
+    working_dir: /app
+
+volumes:
+  composer-cache:
+
