@@ -115,6 +115,7 @@ jobs:
           EOF
       
       - name: Run compatibility test
+        id: test
         run: |
           php bin/compatibility-tester test \
             --config=/tmp/test-config.yml \
@@ -127,17 +128,25 @@ jobs:
       - name: Generate report
         if: always()
         run: |
+          mkdir -p /tmp/reports
           php bin/compatibility-tester report \
             --config=/tmp/test-config.yml \
             --package-path=/tmp/test-package \
             --format=json \
-            --output=/tmp/report.json || true
+            --output=/tmp/reports/report.json || echo '{"error": "Failed to generate report", "timestamp": "'$(date -Iseconds)'"}' > /tmp/reports/report.json
+      
+      - name: Save test output
+        if: always()
+        run: |
+          mkdir -p /tmp/reports
+          echo "{\"test_exit_code\": ${{ steps.test.outcome == 'success' && '0' || '1' }}, \"timestamp\": \"$(date -Iseconds)\"}" > /tmp/reports/test-status.json
       
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.framework-config.framework }}-${{ matrix.framework-config.version }}-php-${{ matrix.php-version }}
-          path: /tmp/report.json
-          if-no-files-found: ignore
+          path: /tmp/reports/
+          retention-days: 30
+          if-no-files-found: warn
 
