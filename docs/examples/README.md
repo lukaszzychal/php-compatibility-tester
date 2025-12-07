@@ -2,6 +2,12 @@
 
 This directory contains example configurations and usage patterns for PHP Compatibility Tester.
 
+## GitHub MCP Server Integration
+
+See [github-integration.php](github-integration.php) for examples of how to integrate PHP Compatibility Tester with GitHub MCP Server for automated reporting, issue creation, and workflow management.
+
+For detailed integration guide, see [GITHUB_MCP_INTEGRATION.md](../GITHUB_MCP_INTEGRATION.md) and [GITHUB_MCP_QUICKSTART.md](../GITHUB_MCP_QUICKSTART.md).
+
 ## Example Configurations
 
 ### Minimal Configuration
