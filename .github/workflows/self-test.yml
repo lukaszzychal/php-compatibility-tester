@@ -16,11 +16,16 @@ jobs:
       fail-fast: false
       matrix:
         php-version: ['8.1', '8.2', '8.3', '8.4']
-        framework: [laravel, symfony, slim]
         include:
+          - framework: laravel
+            version: '11.*'
+            install_command: 'laravel/laravel'
           - framework: laravel
             version: '12.*'
             install_command: 'laravel/laravel'
+          - framework: symfony
+            version: '7.4.*'
+            install_command: 'symfony/symfony'
           - framework: symfony
             version: '8.0.*'
             install_command: 'symfony/symfony'
