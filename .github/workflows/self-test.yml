@@ -10,13 +10,13 @@ on:
 
 jobs:
   self-test:
-    name: Test ${{ matrix.framework }} ${{ matrix.version }} (PHP ${{ matrix.php-version }})
+    name: Test ${{ matrix.framework-config.framework }} ${{ matrix.framework-config.version }} (PHP ${{ matrix.php-version }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         php-version: ['8.1', '8.2', '8.3', '8.4']
-        include:
+        framework-config:
           - framework: laravel
             version: '11.*'
             install_command: 'laravel/laravel'
@@ -60,9 +60,9 @@ jobs:
           package_name: "test/compatibility-package"
           php_versions: ['${{ matrix.php-version }}']
           frameworks:
-            ${{ matrix.framework }}:
-              versions: ['${{ matrix.version }}']
-              install_command: 'composer create-project ${{ matrix.install_command }}'
+            ${{ matrix.framework-config.framework }}:
+              versions: ['${{ matrix.framework-config.version }}']
+              install_command: 'composer create-project ${{ matrix.framework-config.install_command }}'
               php_min_version: '8.1'
           test_scripts:
             - name: autoloading
@@ -74,7 +74,7 @@ jobs:
         run: |
           vendor/bin/compatibility-tester test \
             --config=/tmp/test-config.yml \
-            --framework=${{ matrix.framework }} \
+            --framework=${{ matrix.framework-config.framework }} \
             --php=${{ matrix.php-version }} \
             --package-path=/tmp/test-package
         continue-on-error: true
@@ -93,7 +93,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.framework }}-php-${{ matrix.php-version }}
+          name: test-results-${{ matrix.framework-config.framework }}-${{ matrix.framework-config.version }}-php-${{ matrix.php-version }}
           path: /tmp/report.json
           if-no-files-found: ignore
 
