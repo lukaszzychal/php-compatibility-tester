@@ -32,6 +32,9 @@ class SmokeTest extends TestCase
         }
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ConfigLoader::load
+     */
     public function testConfigLoaderCanLoadValidConfig(): void
     {
         $configPath = $this->tempDir . '/.compatibility.yml';
@@ -55,6 +58,9 @@ YAML;
         $this->assertArrayHasKey('frameworks', $config);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ConfigLoader::load
+     */
     public function testConfigLoaderThrowsExceptionForMissingFile(): void
     {
         $this->expectException(ConfigurationException::class);
@@ -64,6 +70,9 @@ YAML;
         $loader->load('/nonexistent/file.yml');
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::__construct
+     */
     public function testCompatibilityTesterCanBeInstantiated(): void
     {
         $configPath = $this->tempDir . '/.compatibility.yml';
@@ -77,6 +86,9 @@ YAML;
         $this->assertInstanceOf(CompatibilityTester::class, $tester);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::__construct
+     */
     public function testCompatibilityTesterThrowsExceptionForInvalidConfig(): void
     {
         $configPath = $this->tempDir . '/.compatibility.yml';
@@ -87,6 +99,9 @@ YAML;
         new CompatibilityTester($configPath, __DIR__);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ReportGenerator::generate
+     */
     public function testReportGeneratorCanGenerateMarkdown(): void
     {
         $generator = new \LukaszZychal\PhpCompatibilityTester\ReportGenerator();
@@ -104,6 +119,9 @@ YAML;
         $this->assertStringContainsString('laravel', $report);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ReportGenerator::generate
+     */
     public function testReportGeneratorCanGenerateJson(): void
     {
         $generator = new \LukaszZychal\PhpCompatibilityTester\ReportGenerator();
@@ -120,6 +138,9 @@ YAML;
         $this->assertArrayHasKey('results', $data);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\ReportGenerator::generate
+     */
     public function testReportGeneratorCanGenerateHtml(): void
     {
         $generator = new \LukaszZychal\PhpCompatibilityTester\ReportGenerator();

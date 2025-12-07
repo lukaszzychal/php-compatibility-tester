@@ -41,6 +41,10 @@ class FrameworkTesterTest extends TestCase
         }
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::__construct
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::getConfig
+     */
     public function testCompatibilityTesterCanLoadTestPackageConfig(): void
     {
         $configPath = $this->testPackagePath . '/.compatibility.yml';
@@ -56,6 +60,9 @@ class FrameworkTesterTest extends TestCase
         $this->assertEquals('test/compatibility-package', $config['package_name']);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::generateReport
+     */
     public function testCompatibilityTesterCanGenerateReportWithoutRunningTests(): void
     {
         $configPath = $this->testPackagePath . '/.compatibility.yml';
@@ -71,6 +78,9 @@ class FrameworkTesterTest extends TestCase
         $this->assertStringContainsString('PHP Compatibility Test Report', $report);
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::runTests
+     */
     public function testCompatibilityTesterCanFilterByFramework(): void
     {
         $configPath = $this->testPackagePath . '/.compatibility.yml';
@@ -91,6 +101,9 @@ class FrameworkTesterTest extends TestCase
         }
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::runTests
+     */
     public function testCompatibilityTesterCanFilterByPhpVersion(): void
     {
         $configPath = $this->testPackagePath . '/.compatibility.yml';
@@ -109,6 +122,10 @@ class FrameworkTesterTest extends TestCase
         }
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::runTests
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::generateReport
+     */
     public function testReportGenerationWithTestResults(): void
     {
         $configPath = $this->testPackagePath . '/.compatibility.yml';
@@ -138,6 +155,9 @@ class FrameworkTesterTest extends TestCase
         }
     }
 
+    /**
+     * @covers \LukaszZychal\PhpCompatibilityTester\CompatibilityTester::cleanup
+     */
     public function testCompatibilityTesterCleanup(): void
     {
         $configPath = $this->testPackagePath . '/.compatibility.yml';
