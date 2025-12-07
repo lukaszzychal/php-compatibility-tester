@@ -1,5 +1,18 @@
 # PHP Compatibility Tester
 
+![CI](https://github.com/lukaszzychal/php-compatibility-tester/actions/workflows/ci.yml/badge.svg)
+![Docker Tests](https://github.com/lukaszzychal/php-compatibility-tester/actions/workflows/docker-test.yml/badge.svg)
+![Self-Test](https://github.com/lukaszzychal/php-compatibility-tester/actions/workflows/self-test.yml/badge.svg)
+![License](https://img.shields.io/github/license/lukaszzychal/php-compatibility-tester)
+![PHP Version](https://img.shields.io/badge/PHP-8.1%2B-blue.svg)
+![Latest Release](https://img.shields.io/github/v/release/lukaszzychal/php-compatibility-tester?include_prereleases)
+![Packagist Version](https://img.shields.io/packagist/v/lukaszzychal/php-compatibility-tester)
+![Packagist Downloads](https://img.shields.io/packagist/dt/lukaszzychal/php-compatibility-tester)
+![GitHub Issues](https://img.shields.io/github/issues/lukaszzychal/php-compatibility-tester)
+![GitHub Pull Requests](https://img.shields.io/github/issues-pr/lukaszzychal/php-compatibility-tester)
+![GitHub Contributors](https://img.shields.io/github/contributors/lukaszzychal/php-compatibility-tester)
+![GitHub Stars](https://img.shields.io/github/stars/lukaszzychal/php-compatibility-tester?style=social)
+
 A universal, reusable Composer package for testing PHP library compatibility with various frameworks (Laravel, Symfony, CodeIgniter, etc.) and PHP versions.
 
 ## What does this package do?
