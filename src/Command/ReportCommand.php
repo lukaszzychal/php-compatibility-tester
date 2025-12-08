@@ -14,6 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to generate compatibility test reports.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class ReportCommand extends Command
 {

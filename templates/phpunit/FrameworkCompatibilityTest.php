@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  * 
  * This test verifies that the package works correctly with various frameworks.
  * Customize this template based on your package's specific requirements.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class FrameworkCompatibilityTest extends TestCase
 {

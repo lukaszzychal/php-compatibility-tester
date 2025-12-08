@@ -14,6 +14,8 @@ use LukaszZychal\PhpCompatibilityTester\ReportGenerator;
  * 
  * Uwaga: Rzeczywiste wywołania GitHub API są wykonywane przez asystenta AI
  * poprzez MCP Server, nie bezpośrednio z tego kodu.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class GitHubIntegrationExample
 {

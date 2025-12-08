@@ -8,6 +8,8 @@ use LukaszZychal\PhpCompatibilityTester\Exception\CompatibilityException;
 
 /**
  * Generates compatibility test reports in various formats.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class ReportGenerator
 {

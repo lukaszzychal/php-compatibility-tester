@@ -18,6 +18,9 @@ use PHPUnit\Framework\TestCase;
  * 
  * Note: Full framework installation tests are slow and may require network access.
  * They are marked as skipped by default and can be enabled with environment variable.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
+ */
  */
 class FrameworkTesterTest extends TestCase
 {

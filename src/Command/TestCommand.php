@@ -15,6 +15,8 @@ use Symfony\Component\Console\Helper\ProgressBar;
 
 /**
  * Command to run compatibility tests.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class TestCommand extends Command
 {

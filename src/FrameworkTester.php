@@ -9,6 +9,8 @@ use Symfony\Component\Process\Process;
 
 /**
  * Tests compatibility with various PHP frameworks.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class FrameworkTester
 {

@@ -8,6 +8,8 @@ use Exception;
 
 /**
  * Base exception for compatibility testing errors.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class CompatibilityException extends Exception
 {

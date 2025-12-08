@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Smoke tests for basic functionality verification.
  * These tests are quick and don't require full framework installation.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class SmokeTest extends TestCase
 {
