@@ -10,7 +10,7 @@ This document describes the differences between CI/CD files in the project.
 
 **Checks:**
 - ✅ PHPUnit tests (8.1, 8.2, 8.3, 8.4)
-- ✅ PHPStan (static analysis)
+- ✅ PHPStan Fixer (static analysis with automatic fixes)
 - ✅ PHP-CS-Fixer (code style check)
 - ✅ `composer.json` validation
 - ✅ PHP syntax check
@@ -82,7 +82,7 @@ This document describes the differences between CI/CD files in the project.
 | **Test Type** | Unit + Quality | Docker Isolation | Integration |
 | **Frameworks** | ❌ | ❌ | ✅ (Laravel, Symfony, Slim, CodeIgniter, CakePHP) |
 | **Docker** | ❌ | ✅ | ❌ |
-| **PHPStan** | ✅ | ❌ | ❌ |
+| **PHPStan Fixer** | ✅ | ❌ | ❌ |
 | **Security Scan** | ✅ | ❌ | ❌ |
 | **Execution Time** | ~5-10 min | ~5-10 min | ~20-30 min |
 | **Frequency** | Every push/PR | Every push/PR | Push/PR + monthly |
