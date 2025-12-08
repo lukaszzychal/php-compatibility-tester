@@ -16,7 +16,7 @@ class FrameworkTester
     private string $packagePath;
     private string $tempDir;
 
-    public function __construct(string $packageName, string $packagePath, string $tempDir = null)
+    public function __construct(string $packageName, string $packagePath, ?string $tempDir = null)
     {
         $this->packageName = $packageName;
         $this->packagePath = $packagePath;
