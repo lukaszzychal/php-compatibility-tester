@@ -26,8 +26,11 @@ WORKDIR /app
 # Copy composer files
 COPY composer.json composer.lock* ./
 
-# Install dependencies
-RUN composer install --no-interaction --prefer-dist --no-scripts
+# Install dependencies with retry logic and increased timeouts
+RUN composer config --global process-timeout 600 && \
+    composer config --global github-protocols https ssh && \
+    composer install --no-interaction --prefer-dist --no-scripts || \
+    (echo "Retrying with prefer-source..." && composer install --no-interaction --prefer-source --no-scripts)
 
 # Copy application files
 COPY . .
