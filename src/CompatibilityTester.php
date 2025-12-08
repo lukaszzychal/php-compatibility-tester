@@ -18,7 +18,7 @@ class CompatibilityTester
     private array $config = [];
     private string $packagePath;
 
-    public function __construct(string $configPath, string $packagePath = null)
+    public function __construct(string $configPath, ?string $packagePath = null)
     {
         $this->configLoader = new ConfigLoader();
         $this->packagePath = $packagePath ?? getcwd();

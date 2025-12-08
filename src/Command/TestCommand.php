@@ -24,9 +24,10 @@ class TestCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setName('test')
             ->setDescription('Run compatibility tests')
             ->addOption('framework', 'f', InputOption::VALUE_REQUIRED, 'Filter by framework name')
-            ->addOption('version', null, InputOption::VALUE_REQUIRED, 'Filter by framework version')
+            ->addOption('framework-version', null, InputOption::VALUE_REQUIRED, 'Filter by framework version')
             ->addOption('php', 'p', InputOption::VALUE_REQUIRED, 'Filter by PHP version')
             ->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Path to configuration file', '.compatibility.yml')
             ->addOption('package-path', null, InputOption::VALUE_REQUIRED, 'Path to the package being tested');
@@ -57,8 +58,8 @@ class TestCommand extends Command
         if ($input->getOption('framework')) {
             $filters['framework'] = $input->getOption('framework');
         }
-        if ($input->getOption('version')) {
-            $filters['version'] = $input->getOption('version');
+        if ($input->getOption('framework-version')) {
+            $filters['version'] = $input->getOption('framework-version');
         }
         if ($input->getOption('php')) {
             $filters['php'] = $input->getOption('php');

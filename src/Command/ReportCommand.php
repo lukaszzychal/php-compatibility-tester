@@ -23,6 +23,7 @@ class ReportCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setName('report')
             ->setDescription('Generate compatibility test report')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'Report format (markdown, json, html)', 'markdown')
             ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Output file path')

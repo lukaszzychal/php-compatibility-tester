@@ -19,7 +19,7 @@ class InitCommand extends Command
 
     private string $packagePath;
 
-    public function __construct(string $packagePath = null)
+    public function __construct(?string $packagePath = null)
     {
         parent::__construct();
         $this->packagePath = $packagePath ?? dirname(__DIR__, 2);
@@ -27,6 +27,7 @@ class InitCommand extends Command
 
     protected function configure(): void
     {
+        $this->setName('init');
         $this->setDescription('Initialize compatibility testing configuration and templates');
     }
 
