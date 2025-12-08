@@ -10,7 +10,7 @@ Runs on every push and pull request:
 
 - **Tests**: PHPUnit tests on PHP 8.1, 8.2, 8.3
 - **Linting**: PHP syntax validation and Composer validation
-- **Code Quality**: PHPStan analysis (optional, non-blocking)
+- **Code Quality**: PHPStan Fixer analysis with automatic fix suggestions (optional, non-blocking)
 - **Code Style**: PHP-CS-Fixer checks (optional, non-blocking)
 
 ### Self-Test Workflow (`.github/workflows/self-test.yml`)
@@ -111,6 +111,11 @@ For CI/CD, use GitHub Secrets for sensitive values:
 - Never hardcode secrets in workflow files
 
 ## Troubleshooting
+
+### PHPStan Fixer Issues
+
+If you encounter issues with PHPStan Fixer (autoloader errors, binary not found, etc.), see:
+- [PHPStan Fixer Troubleshooting Guide](TROUBLESHOOTING_PHPSTAN_FIXER.md)
 
 ### CI Fails Due to Secret Detection
 

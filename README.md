@@ -198,6 +198,7 @@ See [Configuration Documentation](docs/configuration.md) for detailed informatio
 - [Configuration Reference](docs/configuration.md)
 - [Usage Guide](docs/usage.md)
 - [GitHub MCP Server Integration](docs/GITHUB_MCP_INTEGRATION.md) - Automatyczne raportowanie i integracja z GitHub
+- [CI/CD Documentation](docs/ci-cd.md)
 - [Examples](docs/examples/)
 
 ## Links

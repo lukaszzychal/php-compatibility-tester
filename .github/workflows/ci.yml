@@ -52,9 +52,9 @@ jobs:
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit
       
-      - name: Run PHPStan
+      - name: Run PHPStan Fixer
         continue-on-error: true
-        run: composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src --level=5 || true
+        run: vendor/bin/phpstan-fixer --phpstan-command="vendor/bin/phpstan analyse src --error-format=json --no-progress" --mode=suggest || true
       
       - name: Check code style
         continue-on-error: true
