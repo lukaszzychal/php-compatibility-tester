@@ -18,8 +18,7 @@
     "require-dev": {
         "phpunit/phpunit": "^10.0",
         "lukaszzychal/phpstan-fixer": "^1.0",
-        "vimeo/psalm": "^6.0",
-        "phpstan/phpstan": "^2.1"
+        "vimeo/psalm": "^6.0"
     },
     "autoload": {
         "psr-4": {

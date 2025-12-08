@@ -54,9 +54,7 @@ jobs:
       
       - name: Run PHPStan Fixer
         continue-on-error: true
-        run: |
-          composer require --dev phpstan/phpstan --no-interaction || true
-          vendor/bin/phpstan-fixer --phpstan-command="vendor/bin/phpstan analyse src --error-format=json --no-progress" --mode=suggest || true
+        run: vendor/bin/phpstan-fixer --phpstan-command="vendor/bin/phpstan analyse src --error-format=json --no-progress" --mode=suggest || true
       
       - name: Check code style
         continue-on-error: true
