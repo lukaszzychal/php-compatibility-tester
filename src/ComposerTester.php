@@ -9,6 +9,8 @@ use Symfony\Component\Process\Process;
 
 /**
  * Tests Composer dependency resolution for different PHP versions.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class ComposerTester
 {

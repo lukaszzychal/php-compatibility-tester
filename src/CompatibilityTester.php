@@ -8,6 +8,8 @@ use LukaszZychal\PhpCompatibilityTester\Exception\ConfigurationException;
 
 /**
  * Main orchestrator class for compatibility testing.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class CompatibilityTester
 {

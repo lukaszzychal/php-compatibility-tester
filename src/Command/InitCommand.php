@@ -11,6 +11,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Command to initialize compatibility testing in a project.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class InitCommand extends Command
 {

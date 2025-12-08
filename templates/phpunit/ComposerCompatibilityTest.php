@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  * 
  * This test verifies that the package's Composer dependencies
  * can be resolved correctly for different PHP versions.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class ComposerCompatibilityTest extends TestCase
 {

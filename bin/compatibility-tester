@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
+ */
+
 declare(strict_types=1);
 
 use LukaszZychal\PhpCompatibilityTester\Command\InitCommand;

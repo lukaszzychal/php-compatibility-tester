@@ -9,6 +9,8 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Loads and validates compatibility configuration from YAML files.
+ *
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
 class ConfigLoader
 {

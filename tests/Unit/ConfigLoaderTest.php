@@ -8,6 +8,9 @@ use LukaszZychal\PhpCompatibilityTester\ConfigLoader;
 use LukaszZychal\PhpCompatibilityTester\Exception\ConfigurationException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
+ */
 class ConfigLoaderTest extends TestCase
 {
     private string $tempDir;
