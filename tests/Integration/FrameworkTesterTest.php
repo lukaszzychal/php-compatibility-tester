@@ -21,7 +21,6 @@ use PHPUnit\Framework\TestCase;
  *
  * @author Łukasz Zychal <lukasz.zychal.dev@gmail.com>
  */
- */
 class FrameworkTesterTest extends TestCase
 {
     private string $tempDir;
