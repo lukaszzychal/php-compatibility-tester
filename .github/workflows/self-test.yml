@@ -141,11 +141,20 @@ jobs:
           mkdir -p /tmp/reports
           echo "{\"test_exit_code\": ${{ steps.test.outcome == 'success' && '0' || '1' }}, \"timestamp\": \"$(date -Iseconds)\"}" > /tmp/reports/test-status.json
       
+      - name: Prepare artifact name
+        if: always()
+        id: artifact-name
+        run: |
+          VERSION="${{ matrix.framework-config.version }}"
+          VERSION_CLEAN=$(echo "$VERSION" | tr '*' 'x')
+          ARTIFACT_NAME="test-results-${{ matrix.framework-config.framework }}-${VERSION_CLEAN}-php-${{ matrix.php-version }}"
+          echo "name=${ARTIFACT_NAME}" >> $GITHUB_OUTPUT
+      
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.framework-config.framework }}-${{ matrix.framework-config.version }}-php-${{ matrix.php-version }}
+          name: ${{ steps.artifact-name.outputs.name }}
           path: /tmp/reports/
           retention-days: 30
           if-no-files-found: warn
